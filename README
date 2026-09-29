@@ -1,0 +1,98 @@
+# Senior Living & Retirement Community Analytics – India
+
+A portfolio project that demonstrates an end-to-end data analytics platform for a hypothetical Indian senior-living operator.
+
+> **Important:** All data in this repository is synthetic and created for educational/portfolio purposes. It is not Chartwell data and does not represent any real retirement community.
+
+## Business Problem
+
+A senior-living organization operates communities across Indian cities and needs visibility into:
+- Occupancy and available units
+- Resident demographics and length of stay
+- Service utilization and costs
+- Payment status and revenue
+- Property-level performance
+
+## Architecture
+
+```text
+Synthetic CSV Data
+       |
+       v
+Python ETL / Data Validation
+       |
+       v
+PostgreSQL Data Warehouse
+       |
+       v
+Star Schema / SQL Analytics
+       |
+       v
+Power BI Dashboard
+```
+
+## Repository Structure
+
+```text
+data/       Synthetic source data
+src/        Python ingestion, validation and KPI calculations
+sql/        PostgreSQL schema and analytical queries
+docs/       Dashboard and architecture notes
+```
+
+## Technology Stack
+
+- Python / Pandas
+- PostgreSQL
+- SQL
+- Power BI
+- Git/GitHub
+
+## Key KPIs
+
+### Occupancy
+- Occupancy %
+- Occupied units
+- Available units
+- Occupancy by property and city
+
+### Resident
+- Resident count
+- Average age
+- Care level distribution
+- Length of stay
+
+### Services
+- Service volume
+- Service cost
+- Cost by service type
+
+### Payments
+- Total billed amount
+- Paid / pending / overdue amount
+- Collection rate
+
+## How to Run
+
+```bash
+pip install -r requirements.txt
+python src/validate_data.py
+python src/kpi_analysis.py
+```
+
+## Suggested Power BI Pages
+
+1. Executive Overview
+2. Occupancy & Property Performance
+3. Resident Analytics
+4. Services & Payments
+
+## Future Enhancements
+
+- Load the data into Azure Data Lake or AWS S3
+- Build an automated ETL pipeline
+- Add incremental loading
+- Add data-quality audit tables
+- Create a PostgreSQL/Snowflake dimensional warehouse
+- Add occupancy forecasting with Python
+- Add Power BI row-level security
