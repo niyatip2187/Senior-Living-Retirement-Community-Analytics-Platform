@@ -1,0 +1,44 @@
+WITH latest AS (
+    SELECT MAX(snapshot_date) AS snapshot_date
+    FROM fact_occupancy
+)
+SELECT p.property_name,
+       p.city,
+       o.occupied_units,
+       o.available_units,
+       o.occupancy_pct
+FROM fact_occupancy o
+JOIN dim_property p ON o.property_id = p.property_id
+JOIN latest l ON o.snapshot_date = l.snapshot_date
+ORDER BY o.occupancy_pct DESC;
+
+-- 2. Revenue/payment status
+SELECT payment_status,
+       COUNT(*) AS payment_count,
+       SUM(amount_inr) AS total_amount_inr
+FROM fact_payment
+GROUP BY payment_status
+ORDER BY total_amount_inr DESC;
+
+-- 3. Service utilization and cost
+SELECT service_type,
+       COUNT(*) AS service_count,
+       SUM(cost_inr) AS total_cost_inr,
+       ROUND(AVG(cost_inr), 2) AS avg_cost_inr
+FROM fact_service
+GROUP BY service_type
+ORDER BY total_cost_inr DESC;
+
+-- 4. Resident count by care level
+SELECT care_level,
+       COUNT(*) AS resident_count
+FROM dim_resident
+GROUP BY care_level
+ORDER BY resident_count DESC;
+
+-- 5. Occupancy trend
+SELECT snapshot_date,
+       ROUND(SUM(occupied_units) * 100.0 / SUM(total_units), 2) AS occupancy_pct
+FROM fact_occupancy
+GROUP BY snapshot_date
+ORDER BY snapshot_date;
