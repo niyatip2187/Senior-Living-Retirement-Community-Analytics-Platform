@@ -1,0 +1,53 @@
+CREATE TABLE dim_property (
+    property_id VARCHAR(10) PRIMARY KEY,
+    property_name VARCHAR(100),
+    city VARCHAR(50),
+    total_units INT,
+    property_type VARCHAR(100)
+);
+
+CREATE TABLE dim_resident (
+    resident_id VARCHAR(10) PRIMARY KEY,
+    resident_name VARCHAR(100),
+    age INT,
+    gender VARCHAR(20),
+    property_id VARCHAR(10),
+    move_in_date DATE,
+    care_level VARCHAR(30),
+    FOREIGN KEY (property_id) REFERENCES dim_property(property_id)
+);
+
+CREATE TABLE dim_unit (
+    unit_id VARCHAR(20) PRIMARY KEY,
+    property_id VARCHAR(10),
+    unit_number INT,
+    FOREIGN KEY (property_id) REFERENCES dim_property(property_id)
+);
+
+CREATE TABLE fact_occupancy (
+    snapshot_date DATE,
+    property_id VARCHAR(10),
+    total_units INT,
+    occupied_units INT,
+    available_units INT,
+    occupancy_pct DECIMAL(5,2),
+    FOREIGN KEY (property_id) REFERENCES dim_property(property_id)
+);
+
+CREATE TABLE fact_service (
+    service_id VARCHAR(20) PRIMARY KEY,
+    resident_id VARCHAR(10),
+    service_date DATE,
+    service_type VARCHAR(50),
+    cost_inr DECIMAL(12,2),
+    FOREIGN KEY (resident_id) REFERENCES dim_resident(resident_id)
+);
+
+CREATE TABLE fact_payment (
+    payment_id VARCHAR(20) PRIMARY KEY,
+    resident_id VARCHAR(10),
+    payment_date DATE,
+    amount_inr DECIMAL(12,2),
+    payment_status VARCHAR(20),
+    FOREIGN KEY (resident_id) REFERENCES dim_resident(resident_id)
+);
